@@ -5,21 +5,27 @@ namespace SimpleCRUD.Data
 {
     public class TrainingProductManager
     {
-        public List<TrainingProducts> Get()
+        public List<TrainingProduct> Get(TrainingProduct entity)
         {
-            List<TrainingProducts> ret = new List<TrainingProducts>();
+            List<TrainingProduct> ret = new List<TrainingProduct>();
 
             // TODO: Add data access method here
             ret = CreateMockData();
 
+            if (!string.IsNullOrEmpty(entity.ProductName))
+            {
+                ret = ret.FindAll(p => p.ProductName.ToLower().
+                StartsWith(entity.ProductName, StringComparison.CurrentCultureIgnoreCase));
+            }
+
             return ret;
         }
 
-        private List<TrainingProducts> CreateMockData()
+        private List<TrainingProduct> CreateMockData()
         {
-            List<TrainingProducts> ret = new List<TrainingProducts>();
+            List<TrainingProduct> ret = new List<TrainingProduct>();
 
-            ret.Add(new TrainingProducts()
+            ret.Add(new TrainingProduct()
             {
                 ProductId = 1,
                 ProductName = "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
@@ -28,7 +34,7 @@ namespace SimpleCRUD.Data
                 Price = Convert.ToDecimal(32.00)
             });
 
-            ret.Add(new TrainingProducts()
+            ret.Add(new TrainingProduct()
             {
                 ProductId = 2,
                 ProductName = "Sed ut perspiciatis unde omnis iste",
@@ -37,7 +43,7 @@ namespace SimpleCRUD.Data
                 Price = Convert.ToDecimal(22.00)
             });
 
-            ret.Add(new TrainingProducts()
+            ret.Add(new TrainingProduct()
             {
                 ProductId = 3,
                 ProductName = "Consectetur adipiscing elit",
@@ -46,7 +52,7 @@ namespace SimpleCRUD.Data
                 Price = Convert.ToDecimal(35.00)
             });
 
-            ret.Add(new TrainingProducts()
+            ret.Add(new TrainingProduct()
             {
                 ProductId = 4,
                 ProductName = "Sit amet, consectetur adipiscing elit",
@@ -55,7 +61,7 @@ namespace SimpleCRUD.Data
                 Price = Convert.ToDecimal(54.00)
             });
 
-            ret.Add(new TrainingProducts()
+            ret.Add(new TrainingProduct()
             {
                 ProductId = 5,
                 ProductName = "Dolor sit amet, consectetur adipiscing elit",
@@ -64,7 +70,7 @@ namespace SimpleCRUD.Data
                 Price = Convert.ToDecimal(17.00)
             });
 
-            ret.Add(new TrainingProducts()
+            ret.Add(new TrainingProduct()
             {
                 ProductId = 6,
                 ProductName = "Ipsum dolor sit amet, consectetur adipiscing elit",

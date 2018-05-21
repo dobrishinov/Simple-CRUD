@@ -2,7 +2,7 @@
 
 namespace SimpleCRUD.Data
 {
-    public class TrainingProducts
+    public class TrainingProduct
     {
         public int ProductId { get; set; }
         public string ProductName { get; set; }
