@@ -1,4 +1,4 @@
-﻿@model List<SimpleCRUD.Data.TrainingProducts>
+﻿@model SimpleCRUD.Data.TrainingProductViewModel
 @{
     ViewBag.Title = "Simple CRUD";
 }
@@ -38,7 +38,7 @@
                 </tr>
             </thead>
             <tbody>
-               @foreach (var item in Model)
+               @foreach (var item in Model.Products)
                {
                 <tr>
                     <td>@item.ProductName</td>

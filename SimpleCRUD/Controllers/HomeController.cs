@@ -11,8 +11,10 @@ namespace SimpleCRUD.Controllers
     {
         public ActionResult Index()
         {
-            TrainingProductManager mgr = new TrainingProductManager();
-            return View(mgr.Get());
+            TrainingProductViewModel vm = new TrainingProductViewModel();
+            vm.Get();
+
+            return View(vm);
         }
     }
 }
