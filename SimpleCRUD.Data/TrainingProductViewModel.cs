@@ -10,13 +10,10 @@ namespace SimpleCRUD.Data
     {
         public TrainingProductViewModel()
         {
-            IsListAreaVisible = true;
-            IsSearchAreaVisible = true;
-            IsDetailAreaVisible = false;
+            Init();
 
             Products = new List<TrainingProduct>();
             SearchEntity = new TrainingProduct();
-            EventCommand = "List";
         }
 
         public string EventCommand { get; set; }
@@ -26,6 +23,12 @@ namespace SimpleCRUD.Data
         public bool IsDetailAreaVisible { get; set; }
         public bool IsListAreaVisible { get; set; }
         public bool IsSearchAreaVisible { get; set; }
+
+        private void Init()
+        {
+            EventCommand = "List";
+            ListMode();
+        }
 
         public void HandleRequest()
         {
@@ -40,9 +43,6 @@ namespace SimpleCRUD.Data
                     break;
 
                 case "cancel":
-                    IsListAreaVisible = true;
-                    IsSearchAreaVisible = true;
-                    IsDetailAreaVisible = false;
                     Get();
                     break;
 
@@ -52,9 +52,7 @@ namespace SimpleCRUD.Data
                     break;
 
                 case "add":
-                    IsListAreaVisible = false;
-                    IsSearchAreaVisible = false;
-                    IsDetailAreaVisible = true;
+                    AddMode();
                     break;
 
                 default:
@@ -62,10 +60,25 @@ namespace SimpleCRUD.Data
             }
         }
 
+        private void ListMode()
+        {
+            IsListAreaVisible = true;
+            IsSearchAreaVisible = true;
+            IsDetailAreaVisible = false;
+        }
+
+        private void AddMode()
+        {
+            IsListAreaVisible = false;
+            IsSearchAreaVisible = false;
+            IsDetailAreaVisible = true;
+        }
+
         private void ResetSearch()
         {
             SearchEntity = new TrainingProduct();
         }
+
         private void Get()
         {
             TrainingProductManager mgr = new TrainingProductManager();
