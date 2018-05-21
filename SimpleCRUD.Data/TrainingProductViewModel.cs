@@ -10,6 +10,10 @@ namespace SimpleCRUD.Data
     {
         public TrainingProductViewModel()
         {
+            IsListAreaVisible = true;
+            IsSearchAreaVisible = true;
+            IsDetailAreaVisible = false;
+
             Products = new List<TrainingProduct>();
             SearchEntity = new TrainingProduct();
             EventCommand = "List";
@@ -18,6 +22,10 @@ namespace SimpleCRUD.Data
         public string EventCommand { get; set; }
         public List<TrainingProduct> Products { get; set; }
         public TrainingProduct SearchEntity { get; set; }
+
+        public bool IsDetailAreaVisible { get; set; }
+        public bool IsListAreaVisible { get; set; }
+        public bool IsSearchAreaVisible { get; set; }
 
         public void HandleRequest()
         {
@@ -28,9 +36,25 @@ namespace SimpleCRUD.Data
                     Get();
                     break;
 
+                case "save":
+                    break;
+
+                case "cancel":
+                    IsListAreaVisible = true;
+                    IsSearchAreaVisible = true;
+                    IsDetailAreaVisible = false;
+                    Get();
+                    break;
+
                 case "resetsearch":
                     ResetSearch();
                     Get();
+                    break;
+
+                case "add":
+                    IsListAreaVisible = false;
+                    IsSearchAreaVisible = false;
+                    IsDetailAreaVisible = true;
                     break;
 
                 default:
