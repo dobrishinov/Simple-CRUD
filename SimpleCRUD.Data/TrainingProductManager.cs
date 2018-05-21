@@ -27,6 +27,13 @@ namespace SimpleCRUD.Data
             return (ValidationErrors.Count == 0);
         }
 
+        public bool Delete(TrainingProduct entity)
+        {
+            // TODO: Create DELETE code here
+
+            return true;
+        }
+
         public TrainingProduct Get(int productId)
         {
             List<TrainingProduct> list = new List<TrainingProduct>();

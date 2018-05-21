@@ -63,6 +63,11 @@ namespace SimpleCRUD.Data
                     Edit();
                     break;
 
+                case "delete":
+                    ResetSearch();
+                    Delete();
+                    break;
+
                 case "cancel":
                     Get();
                     break;
@@ -143,6 +148,19 @@ namespace SimpleCRUD.Data
             Entity = mgr.Get(Convert.ToInt32(EventArgument));
 
             EditMode();
+        }
+
+        private void Delete()
+        {
+            TrainingProductManager mgr = new TrainingProductManager();
+            Entity = new TrainingProduct();
+            Entity.ProductId = Convert.ToInt32(EventArgument);
+
+            mgr.Delete(Entity);
+
+            Get();
+
+            ListMode();
         }
 
         private void AddMode()
