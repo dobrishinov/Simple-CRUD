@@ -27,6 +27,32 @@ namespace SimpleCRUD.Data
             return (ValidationErrors.Count == 0);
         }
 
+        public TrainingProduct Get(int productId)
+        {
+            List<TrainingProduct> list = new List<TrainingProduct>();
+            TrainingProduct ret = new TrainingProduct();
+
+            // TODO: Call your data access method here
+            list = CreateMockData();
+
+            ret = list.Find(p => p.ProductId == productId);
+
+            return ret;
+        }
+
+        public bool Update(TrainingProduct entity)
+        {
+            bool ret = false;
+
+            ret = Validate(entity);
+            if (ret)
+            {
+                // TODO: Create UPDATE code here
+            }
+
+            return ret;
+        }
+
         public bool Insert(TrainingProduct entity)
         {
             bool ret = false;

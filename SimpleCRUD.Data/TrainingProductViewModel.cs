@@ -25,6 +25,8 @@ namespace SimpleCRUD.Data
         public string Mode { get; set; }
         public List<KeyValuePair<string, string>> ValidationErrors { get; set; }
 
+        public string EventArgument { get; set; }
+
         public bool IsDetailAreaVisible { get; set; }
         public bool IsListAreaVisible { get; set; }
         public bool IsSearchAreaVisible { get; set; }
@@ -32,6 +34,7 @@ namespace SimpleCRUD.Data
         private void Init()
         {
             EventCommand = "List";
+            EventArgument = string.Empty;
 
             ValidationErrors = new List<KeyValuePair<string, string>>();
 
@@ -49,10 +52,15 @@ namespace SimpleCRUD.Data
 
                 case "save":
                     Save();
-                    if (!IsValid)
+                    if (IsValid)
                     {
                         Get();
                     }
+                    break;
+
+                case "edit":
+                    IsValid = true;
+                    Edit();
                     break;
 
                 case "cancel":
@@ -81,6 +89,10 @@ namespace SimpleCRUD.Data
             {
                 mgr.Insert(Entity);
             }
+            else
+            {
+                mgr.Update(Entity);
+            }
 
             ValidationErrors = mgr.ValidationErrors;
             if (ValidationErrors.Count > 0)
@@ -93,6 +105,10 @@ namespace SimpleCRUD.Data
                 if (Mode == "Add")
                 {
                     AddMode();
+                }
+                else
+                {
+                    EditMode();
                 }
             }
         }
@@ -120,6 +136,15 @@ namespace SimpleCRUD.Data
             AddMode();
         }
 
+        private void Edit()
+        {
+            TrainingProductManager mgr = new TrainingProductManager();
+
+            Entity = mgr.Get(Convert.ToInt32(EventArgument));
+
+            EditMode();
+        }
+
         private void AddMode()
         {
             IsListAreaVisible = false;
@@ -127,6 +152,15 @@ namespace SimpleCRUD.Data
             IsDetailAreaVisible = true;
 
             Mode = "Add";
+        }
+
+        private void EditMode()
+        {
+            IsListAreaVisible = false;
+            IsSearchAreaVisible = false;
+            IsDetailAreaVisible = true;
+
+            Mode = "Edit";
         }
 
         private void ResetSearch()
