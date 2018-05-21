@@ -23,6 +23,7 @@ namespace SimpleCRUD.Data
         public TrainingProduct SearchEntity { get; set; }
         public bool IsValid { get; set; }
         public string Mode { get; set; }
+        public List<KeyValuePair<string, string>> ValidationErrors { get; set; }
 
         public bool IsDetailAreaVisible { get; set; }
         public bool IsListAreaVisible { get; set; }
@@ -31,6 +32,9 @@ namespace SimpleCRUD.Data
         private void Init()
         {
             EventCommand = "List";
+
+            ValidationErrors = new List<KeyValuePair<string, string>>();
+
             ListMode();
         }
 
@@ -71,14 +75,20 @@ namespace SimpleCRUD.Data
 
         private void Save()
         {
-            if (IsValid)
+            TrainingProductManager mgr = new TrainingProductManager();
+
+            if (Mode == "Add")
             {
-                if(Mode == "Add")
-                {
-                    // Add data to database here
-                }
+                mgr.Insert(Entity);
             }
-            else
+
+            ValidationErrors = mgr.ValidationErrors;
+            if (ValidationErrors.Count > 0)
+            {
+                IsValid = false;
+            }
+
+            if (!IsValid)
             {
                 if (Mode == "Add")
                 {
