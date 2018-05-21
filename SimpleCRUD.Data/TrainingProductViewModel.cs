@@ -14,11 +14,15 @@ namespace SimpleCRUD.Data
 
             Products = new List<TrainingProduct>();
             SearchEntity = new TrainingProduct();
+            Entity = new TrainingProduct();
         }
 
+        public TrainingProduct Entity { get; set; }
         public string EventCommand { get; set; }
         public List<TrainingProduct> Products { get; set; }
         public TrainingProduct SearchEntity { get; set; }
+        public bool IsValid { get; set; }
+        public string Mode { get; set; }
 
         public bool IsDetailAreaVisible { get; set; }
         public bool IsListAreaVisible { get; set; }
@@ -52,7 +56,7 @@ namespace SimpleCRUD.Data
                     break;
 
                 case "add":
-                    AddMode();
+                    Add();
                     break;
 
                 default:
@@ -62,9 +66,25 @@ namespace SimpleCRUD.Data
 
         private void ListMode()
         {
+            IsValid = true;
+
             IsListAreaVisible = true;
             IsSearchAreaVisible = true;
             IsDetailAreaVisible = false;
+
+            Mode = "List";
+        }
+
+        private void Add()
+        {
+            IsValid = true;
+
+            Entity = new TrainingProduct();
+            Entity.IntroductionDate = DateTime.Now;
+            Entity.Url = "https://";
+            Entity.Price = 0;
+
+            AddMode();
         }
 
         private void AddMode()
@@ -72,6 +92,8 @@ namespace SimpleCRUD.Data
             IsListAreaVisible = false;
             IsSearchAreaVisible = false;
             IsDetailAreaVisible = true;
+
+            Mode = "Add";
         }
 
         private void ResetSearch()
