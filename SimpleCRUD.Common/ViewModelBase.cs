@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace SimpleCRUD.Common
 {
@@ -34,8 +30,26 @@ namespace SimpleCRUD.Common
             ListMode();
         }
 
-        protected virtual void Get()
+        protected virtual void ResetSearch()
         {
+        }
+
+        protected virtual void AddMode()
+        {
+            IsListAreaVisible = false;
+            IsSearchAreaVisible = false;
+            IsDetailAreaVisible = true;
+
+            Mode = "Add";
+        }
+
+        protected virtual void EditMode()
+        {
+            IsListAreaVisible = false;
+            IsSearchAreaVisible = false;
+            IsDetailAreaVisible = true;
+
+            Mode = "Edit";
         }
 
         protected virtual void ListMode()
@@ -47,6 +61,45 @@ namespace SimpleCRUD.Common
             IsDetailAreaVisible = false;
 
             Mode = "List";
+        }
+
+        protected virtual void Get()
+        {
+        }
+
+        protected virtual void Add()
+        {
+            AddMode();
+        }
+
+        protected virtual void Edit()
+        {
+            EditMode();
+        }
+
+        protected virtual void Delete()
+        {
+            ListMode();
+        }
+
+        protected virtual void Save()
+        {
+            if (ValidationErrors.Count > 0)
+            {
+                IsValid = false;
+            }
+
+            if (!IsValid)
+            {
+                if (Mode == "Add")
+                {
+                    AddMode();
+                }
+                else
+                {
+                    EditMode();
+                }
+            }
         }
     }
 }

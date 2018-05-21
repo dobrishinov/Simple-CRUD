@@ -68,7 +68,7 @@ namespace SimpleCRUD.Data
             }
         }
 
-        private void Save()
+        protected override void Save()
         {
             TrainingProductManager mgr = new TrainingProductManager();
 
@@ -82,25 +82,11 @@ namespace SimpleCRUD.Data
             }
 
             ValidationErrors = mgr.ValidationErrors;
-            if (ValidationErrors.Count > 0)
-            {
-                IsValid = false;
-            }
 
-            if (!IsValid)
-            {
-                if (Mode == "Add")
-                {
-                    AddMode();
-                }
-                else
-                {
-                    EditMode();
-                }
-            }
+            base.Save();
         }
 
-        private void Add()
+        protected override void Add()
         {
             IsValid = true;
 
@@ -109,19 +95,19 @@ namespace SimpleCRUD.Data
             Entity.Url = "https://";
             Entity.Price = 0;
 
-            AddMode();
+            base.Add();
         }
 
-        private void Edit()
+        protected override void Edit()
         {
             TrainingProductManager mgr = new TrainingProductManager();
 
             Entity = mgr.Get(Convert.ToInt32(EventArgument));
 
-            EditMode();
+            base.Edit();
         }
 
-        private void Delete()
+        protected override void Delete()
         {
             TrainingProductManager mgr = new TrainingProductManager();
             Entity = new TrainingProduct();
@@ -131,28 +117,10 @@ namespace SimpleCRUD.Data
 
             Get();
 
-            ListMode();
+            base.Delete();
         }
 
-        private void AddMode()
-        {
-            IsListAreaVisible = false;
-            IsSearchAreaVisible = false;
-            IsDetailAreaVisible = true;
-
-            Mode = "Add";
-        }
-
-        private void EditMode()
-        {
-            IsListAreaVisible = false;
-            IsSearchAreaVisible = false;
-            IsDetailAreaVisible = true;
-
-            Mode = "Edit";
-        }
-
-        private void ResetSearch()
+        protected override void ResetSearch()
         {
             SearchEntity = new TrainingProduct();
         }
