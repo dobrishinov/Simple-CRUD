@@ -46,5 +46,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TrainingProductViewModel.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleCRUD.Common\SimpleCRUD.Common.csproj">
+      <Project>{d149d74b-aec4-4bcd-9d6f-2c93e654a7c0}</Project>
+      <Name>SimpleCRUD.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

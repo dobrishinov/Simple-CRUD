@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRUD", "SimpleCRUD\Si
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRUD.Data", "SimpleCRUD.Data\SimpleCRUD.Data.csproj", "{2EB5E57B-150E-4E35-BDC7-A9A427AB831C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRUD.Common", "SimpleCRUD.Common\SimpleCRUD.Common.csproj", "{D149D74B-AEC4-4BCD-9D6F-2C93E654A7C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{2EB5E57B-150E-4E35-BDC7-A9A427AB831C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EB5E57B-150E-4E35-BDC7-A9A427AB831C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EB5E57B-150E-4E35-BDC7-A9A427AB831C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D149D74B-AEC4-4BCD-9D6F-2C93E654A7C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D149D74B-AEC4-4BCD-9D6F-2C93E654A7C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D149D74B-AEC4-4BCD-9D6F-2C93E654A7C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D149D74B-AEC4-4BCD-9D6F-2C93E654A7C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

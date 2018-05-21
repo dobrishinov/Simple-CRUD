@@ -210,6 +210,10 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SimpleCRUD.Common\SimpleCRUD.Common.csproj">
+      <Project>{d149d74b-aec4-4bcd-9d6f-2c93e654a7c0}</Project>
+      <Name>SimpleCRUD.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SimpleCRUD.Data\SimpleCRUD.Data.csproj">
       <Project>{2eb5e57b-150e-4e35-bdc7-a9a427ab831c}</Project>
       <Name>SimpleCRUD.Data</Name>

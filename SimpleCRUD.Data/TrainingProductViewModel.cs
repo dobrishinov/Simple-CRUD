@@ -14,6 +14,20 @@ namespace SimpleCRUD.Data
         public List<TrainingProduct> Products { get; set; }
         public TrainingProduct SearchEntity { get; set; }
 
+        public override void HandleRequest()
+        {
+            switch (EventCommand.ToLower())
+            {
+                case "demo":
+                    break;
+
+                default:
+                    break;
+            }
+
+            base.HandleRequest();
+        }
+
         protected override void Init()
         {
             Products = new List<TrainingProduct>();
@@ -21,51 +35,6 @@ namespace SimpleCRUD.Data
             Entity = new TrainingProduct();
 
             base.Init();
-        }
-
-        public void HandleRequest()
-        {
-            switch (EventCommand.ToLower())
-            {
-                case "list":
-                case "search":
-                    Get();
-                    break;
-
-                case "save":
-                    Save();
-                    if (IsValid)
-                    {
-                        Get();
-                    }
-                    break;
-
-                case "edit":
-                    IsValid = true;
-                    Edit();
-                    break;
-
-                case "delete":
-                    ResetSearch();
-                    Delete();
-                    break;
-
-                case "cancel":
-                    Get();
-                    break;
-
-                case "resetsearch":
-                    ResetSearch();
-                    Get();
-                    break;
-
-                case "add":
-                    Add();
-                    break;
-
-                default:
-                    break;
-            }
         }
 
         protected override void Save()
@@ -123,6 +92,8 @@ namespace SimpleCRUD.Data
         protected override void ResetSearch()
         {
             SearchEntity = new TrainingProduct();
+
+            base.ResetSearch();
         }
 
         protected override void Get()
@@ -130,6 +101,8 @@ namespace SimpleCRUD.Data
             TrainingProductManager mgr = new TrainingProductManager();
 
             Products = mgr.Get(SearchEntity);
+
+            base.Get();
         }
     }
 }
