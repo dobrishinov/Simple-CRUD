@@ -44,6 +44,11 @@ namespace SimpleCRUD.Data
                     break;
 
                 case "save":
+                    Save();
+                    if (!IsValid)
+                    {
+                        Get();
+                    }
                     break;
 
                 case "cancel":
@@ -61,6 +66,24 @@ namespace SimpleCRUD.Data
 
                 default:
                     break;
+            }
+        }
+
+        private void Save()
+        {
+            if (IsValid)
+            {
+                if(Mode == "Add")
+                {
+                    // Add data to database here
+                }
+            }
+            else
+            {
+                if (Mode == "Add")
+                {
+                    AddMode();
+                }
             }
         }
 
