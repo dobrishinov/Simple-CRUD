@@ -80,7 +80,7 @@ namespace SimpleCRUD.Data
         {
             TrainingProductManager mgr = new TrainingProductManager();
             Entity = new TrainingProduct();
-            Entity.ProductId = Convert.ToInt32(EventArgument);
+            Entity.Id = Convert.ToInt32(EventArgument);
 
             mgr.Delete(Entity);
 

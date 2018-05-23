@@ -5,7 +5,7 @@ namespace SimpleCRUD.Data
 {
     public class TrainingProduct
     {
-        public int ProductId { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Product Name must be filled in.")]
         [Display(Description = "Product Name")]

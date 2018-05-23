@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SimpleCRUD.Data
 {
     public class TrainingProductManager
     {
+        private readonly ProductDbContext Db;
+
         public TrainingProductManager()
         {
             ValidationErrors = new List<KeyValuePair<string, string>>();
+            this.Db = new ProductDbContext();
         }
 
         public List<KeyValuePair<string, string>> ValidationErrors { get; set; }
@@ -29,22 +33,19 @@ namespace SimpleCRUD.Data
 
         public bool Delete(TrainingProduct entity)
         {
-            // TODO: Create DELETE code here
+            var DbItem = Db.TrainingProduct;
+            DbItem.Remove(DbItem.Find(entity.Id));
+
+            Db.SaveChanges();
 
             return true;
         }
 
         public TrainingProduct Get(int productId)
         {
-            List<TrainingProduct> list = new List<TrainingProduct>();
-            TrainingProduct ret = new TrainingProduct();
+            var DbItem = Db.TrainingProduct.Find(productId);
 
-            // TODO: Call your data access method here
-            list = CreateMockData();
-
-            ret = list.Find(p => p.ProductId == productId);
-
-            return ret;
+            return DbItem;
         }
 
         public bool Update(TrainingProduct entity)
@@ -54,7 +55,23 @@ namespace SimpleCRUD.Data
             ret = Validate(entity);
             if (ret)
             {
-                // TODO: Create UPDATE code here
+                var DbItem = Db.TrainingProduct.Find(entity.Id);
+
+                DbItem.Id = entity.Id;
+                DbItem.ProductName = entity.ProductName;
+                DbItem.IntroductionDate = entity.IntroductionDate;
+                DbItem.Url = entity.Url;
+                DbItem.Price = entity.Price;
+
+                try
+                {
+                    Db.SaveChanges();
+                }
+                catch (Exception)
+                {
+
+                    return ret;
+                }
             }
 
             return ret;
@@ -68,7 +85,16 @@ namespace SimpleCRUD.Data
 
             if (ret)
             {
-                // TODO: Create Insert Code here
+                Db.TrainingProduct.Add(entity);
+                try
+                {
+                    Db.SaveChanges();
+                }
+                catch (Exception)
+                {
+
+                    return ret;
+                }
             }
 
             return ret;
@@ -76,79 +102,42 @@ namespace SimpleCRUD.Data
 
         public List<TrainingProduct> Get(TrainingProduct entity)
         {
-            List<TrainingProduct> ret = new List<TrainingProduct>();
+            List<TrainingProduct> products = new List<TrainingProduct>();
+            var DbItems = Db.TrainingProduct;
 
-            // TODO: Add data access method here
-            ret = CreateMockData();
-
+            // TODO: Refactor Searching...
             if (!string.IsNullOrEmpty(entity.ProductName))
             {
-                ret = ret.FindAll(p => p.ProductName.ToLower().
-                StartsWith(entity.ProductName, StringComparison.CurrentCultureIgnoreCase));
+                var search = DbItems.Where(p => p.ProductName.Contains(entity.ProductName));
+
+                foreach (var product in search)
+                {
+                    products.Add(new TrainingProduct()
+                    {
+                        Id = product.Id,
+                        ProductName = product.ProductName,
+                        IntroductionDate = product.IntroductionDate,
+                        Url = product.Url,
+                        Price = product.Price
+                    });
+                }
+
+                return products;
             }
 
-            return ret;
-        }
-
-        private List<TrainingProduct> CreateMockData()
-        {
-            List<TrainingProduct> ret = new List<TrainingProduct>();
-
-            ret.Add(new TrainingProduct()
+            foreach (var product in DbItems)
             {
-                ProductId = 1,
-                ProductName = "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-                IntroductionDate = Convert.ToDateTime("6/6/2018"),
-                Url = "https://google.com",
-                Price = Convert.ToDecimal(32.00)
-            });
+                products.Add(new TrainingProduct()
+                {
+                    Id = product.Id,
+                    ProductName = product.ProductName,
+                    IntroductionDate = product.IntroductionDate,
+                    Url = product.Url,
+                    Price = product.Price
+                });
+            }
 
-            ret.Add(new TrainingProduct()
-            {
-                ProductId = 2,
-                ProductName = "Sed ut perspiciatis unde omnis iste",
-                IntroductionDate = Convert.ToDateTime("3/6/2018"),
-                Url = "https://google.com",
-                Price = Convert.ToDecimal(22.00)
-            });
-
-            ret.Add(new TrainingProduct()
-            {
-                ProductId = 3,
-                ProductName = "Consectetur adipiscing elit",
-                IntroductionDate = Convert.ToDateTime("3/6/2018"),
-                Url = "https://google.com",
-                Price = Convert.ToDecimal(35.00)
-            });
-
-            ret.Add(new TrainingProduct()
-            {
-                ProductId = 4,
-                ProductName = "Sit amet, consectetur adipiscing elit",
-                IntroductionDate = Convert.ToDateTime("6/6/2018"),
-                Url = "https://google.com",
-                Price = Convert.ToDecimal(54.00)
-            });
-
-            ret.Add(new TrainingProduct()
-            {
-                ProductId = 5,
-                ProductName = "Dolor sit amet, consectetur adipiscing elit",
-                IntroductionDate = Convert.ToDateTime("6/6/2018"),
-                Url = "https://google.com",
-                Price = Convert.ToDecimal(17.00)
-            });
-
-            ret.Add(new TrainingProduct()
-            {
-                ProductId = 6,
-                ProductName = "Ipsum dolor sit amet, consectetur adipiscing elit",
-                IntroductionDate = Convert.ToDateTime("6/6/2018"),
-                Url = "https://google.com",
-                Price = Convert.ToDecimal(12.00)
-            });
-
-            return ret;
+            return products;
         }
     }
 }
